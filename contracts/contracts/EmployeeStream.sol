@@ -8,9 +8,17 @@ contract EmployeeStream {
         string companyName;
     }
 
+    struct Employer {
+        address userAddress;
+        string name;
+        string companyName;
+    }
+
     mapping(address => Employee) public employees;
     mapping(string => Employee[]) public employeesByCompanyName;
     mapping(address => string) public employerOfCompany;
+
+    Employer[] public employers;
 
     // modifier to check if the caller is the employer of that company
     // @param _companyName - name of the company
@@ -24,11 +32,14 @@ contract EmployeeStream {
 
     // Register employer
     // @param _companyName - name of the company
-    function registerEmployer(string memory _companyName) public {
+    function registerEmployer(string memory _name, string memory _companyName) public {
         require(
             compare(employerOfCompany[msg.sender], ""),
             "registerEmployer: Employer already registered"
         );
+        Employer memory employer = Employer(msg.sender, _name, _companyName);
+        employers.push(employer);
+        
         employerOfCompany[msg.sender] = _companyName;
     }
 

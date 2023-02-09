@@ -1,0 +1,18 @@
+.page {
+    margin-top: 9%;
+}
+
+.description {
+    margin-left: 12%;
+}
+
+.heading {
+    line-height: 3.8rem;
+}
+
+.page button {
+    width: 200px;
+    height: 60px;
+    background-color: white;
+    color: black;
+}
