@@ -5,13 +5,32 @@ contract EmployeeStream {
     struct Employee {
         address userAddress;
         string name;
-        uint256 age;
-        string homeAddress;
+        string companyName;
     }
 
     mapping(address => Employee) public employees;
+    mapping(string => Employee[]) public employeesByCompanyName;
+    mapping(address => string) public employerOfCompany;
 
-    Employee[] public employeeList;
+    // modifier to check if the caller is the employer of that company
+    // @param _companyName - name of the company
+    modifier onlyEmployer(string memory _companyName) {
+        require(
+            compare(employerOfCompany[msg.sender], _companyName),
+            "Only employer can call this function"
+        );
+        _;
+    }
+
+    // Register employer
+    // @param _companyName - name of the company
+    function registerEmployer(string memory _companyName) public {
+        require(
+            compare(employerOfCompany[msg.sender], ""),
+            "registerEmployer: Employer already registered"
+        );
+        employerOfCompany[msg.sender] = _companyName;
+    }
 
     // Register employee
     // @param _userAddress - address of the employee
@@ -21,23 +40,38 @@ contract EmployeeStream {
     function registerEmployee(
         address _userAddress,
         string memory _name,
-        uint256 _age,
-        string memory _homeAddress
-    ) public {
-        Employee memory newEmployee = Employee(
-            _userAddress,
-            _name,
-            _age,
-            _homeAddress
-        );
-        employees[_userAddress] = newEmployee;
-        employeeList.push(newEmployee);
+        string memory _companyName
+    ) public onlyEmployer(_companyName) {
+        Employee memory employee = Employee({
+            userAddress: _userAddress,
+            name: _name,
+            companyName: _companyName
+        });
+        employeesByCompanyName[_companyName].push(employee);
+        employees[_userAddress] = employee;
     }
 
     // Stream payment to employee
     // @dev - stream employee using the address
     // @param _userAddress - address of the employee
-    function streamPayToEmployee(address _userAddress) public payable {
+    function streamPayToEmployee(
+        address _userAddress,
+        string memory _companyName
+    ) public payable onlyEmployer(_companyName) {
         // TODO: Implement this function
+    }
+
+    // compare two strings
+    // @param str1 - first string
+    // @param str2 - second string
+    // @return - true if strings are equal, false otherwise
+    function compare(string memory str1, string memory str2)
+        public
+        pure
+        returns (bool)
+    {
+        return
+            keccak256(abi.encodePacked(str1)) ==
+            keccak256(abi.encodePacked(str2));
     }
 }
