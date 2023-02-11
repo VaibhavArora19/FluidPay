@@ -17,6 +17,7 @@ contract EmployeeStream {
     mapping(address => Employee) public employees;
     mapping(string => Employee[]) public employeesByCompanyName;
     mapping(address => string) public employerOfCompany;
+    mapping(string => address) public employerByCompanyName;
 
     Employer[] public employers;
 
@@ -41,6 +42,7 @@ contract EmployeeStream {
         employers.push(employer);
         
         employerOfCompany[msg.sender] = _companyName;
+        employerByCompanyName[_companyName] = msg.sender;
     }
 
     // Register employee
