@@ -1,4 +1,4 @@
-// SPDX-License-Identifier: UNLICENSED
+// SPDX-License-Identifier: MIT
 pragma solidity ^0.8.9;
 
 contract EmployeeStream {
@@ -33,14 +33,16 @@ contract EmployeeStream {
 
     // Register employer
     // @param _companyName - name of the company
-    function registerEmployer(string memory _name, string memory _companyName) public {
+    function registerEmployer(string memory _name, string memory _companyName)
+        public
+    {
         require(
             compare(employerOfCompany[msg.sender], ""),
             "registerEmployer: Employer already registered"
         );
         Employer memory employer = Employer(msg.sender, _name, _companyName);
         employers.push(employer);
-        
+
         employerOfCompany[msg.sender] = _companyName;
         employerByCompanyName[_companyName] = msg.sender;
     }
