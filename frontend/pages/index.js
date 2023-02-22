@@ -1,6 +1,15 @@
 import Head from "next/head";
+import { useRef, useState } from "react";
 
 const Home = () => {
+  const [name, setName] = useState("");
+  const [address, setAddress] = useState("0x00000000000000000");
+  const [company, setCompany] = useState("");
+
+  const registerHandler = (event) => {
+    event.preventDefault();
+  };
+
   return (
     <>
       <Head>
@@ -9,24 +18,68 @@ const Home = () => {
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
-      <main className="border border-gray-200 h-[90vh] rounded-2xl shadow bg-white">
-        <form className='flex flex-col w-[600px] shadow rounded-md py-8 px-4 mx-auto mt-20'>
-          <label htmlFor="name">Name</label>
-          <input id="name" placeholder="John Doe" />
+      <main className=" h-[90vh]  bg-[#DFECF1]">
+        <form
+          onSubmit={registerHandler}
+          className="flex flex-col font-Poppins w-[750px] bg-[#D0E1E9] shadow-2xl rounded-2xl p-10 mx-auto mt-20"
+        >
+          <label htmlFor="name" className=" font-semibold text-lg mb-1">
+            Name
+          </label>
+          <input
+            required
+            // ref={enteredName}
+            id="name"
+            className="border py-3 px-2 rounded-md bg-gray-200 mb-7"
+            placeholder="John Doe"
+          />
 
-          <label htmlFor="add">Address</label>
-          <input id="add" placeholder="0x00000000000000000" />
+          <label htmlFor="add" className=" font-semibold text-lg mb-1">
+            Address
+          </label>
+          <input
+            // ref={enteredAddress}
+            required
+            className="border py-3 px-2 rounded-md bg-gray-200 mb-7"
+            id="add"
+            placeholder="0x00000000000000000"
+          />
 
-          <input type="radio" name="employ" id="employee" />
-          <label>Employee</label>
+          <div className="flex justify-around gap-4 font-semibold text-lg mb-7">
+            <label
+              htmlFor="employee"
+              className="flex gap-1 items-center cursor-pointer  hover:bg-[black] py-4 pl-2 bg-[#1e1e1e] text-white  w-full rounded-md "
+            >
+              <input type="radio" name="employ" id="employee" required />
+              <p>Employee</p>
+            </label>
 
-          <input type="radio" name="employ" id="employer" />
-          <label>Employer</label>
+            <label
+              htmlFor="employer"
+              className="flex gap-1 cursor-pointer items-center hover:bg-[black] py-4 bg-[#1e1e1e] text-white  pl-2 w-full rounded-md "
+            >
+              <input type="radio" name="employ" id="employer" required />
+              <p>Employer</p>
+            </label>
+          </div>
 
-          <label htmlFor="company">Company Name</label>
-          <input id="company" placeholder="Space DAO" />
+          <label htmlFor="company" className="font-semibold text-lg mb-1">
+            Company Name
+          </label>
+          <input
+            // ref={enteredCompany}
+            className="border py-3 px-2 rounded-md bg-gray-200 mb-7"
+            id="company"
+            required
+            placeholder="Space DAO"
+          />
 
-          <button>Submit</button>
+          <button
+            type="submit"
+            className="bg-[#1e1e1e] py-3 uppercase tracking-wider  text-white font-semibold text-lg rounded-lg hover:bg-[black]"
+          >
+            Submit
+          </button>
         </form>
       </main>
     </>
