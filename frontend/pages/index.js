@@ -21,7 +21,7 @@ const Home = () => {
       <main className=" h-[90vh]  bg-[#DFECF1]">
         <form
           onSubmit={registerHandler}
-          className="flex flex-col font-Poppins w-[750px] bg-[#D0E1E9] shadow-2xl rounded-2xl p-10 mx-auto mt-20"
+          className="flex flex-col font-Poppins w-[750px] bg-[#D0E1E9] shadow-2xl rounded-2xl p-10 mx-auto  mt-20"
         >
           <label htmlFor="name" className=" font-semibold text-lg mb-1">
             Name
@@ -48,7 +48,7 @@ const Home = () => {
           <div className="flex justify-around gap-4 font-semibold text-lg mb-7">
             <label
               htmlFor="employee"
-              className="flex gap-1 items-center cursor-pointer  hover:bg-[black] py-4 pl-2 bg-[#1e1e1e] text-white  w-full rounded-md "
+              className="flex gap-1 items-center cursor-pointer  hover:bg-gray-300 py-4 pl-2 bg-gray-200 text-black  w-full rounded-md "
             >
               <input type="radio" name="employ" id="employee" required />
               <p>Employee</p>
@@ -56,7 +56,7 @@ const Home = () => {
 
             <label
               htmlFor="employer"
-              className="flex gap-1 cursor-pointer items-center hover:bg-[black] py-4 bg-[#1e1e1e] text-white  pl-2 w-full rounded-md "
+              className="flex gap-1 cursor-pointer items-center hover:bg-gray-300 py-4 bg-gray-200 text-black  pl-2 w-full rounded-md "
             >
               <input type="radio" name="employ" id="employer" required />
               <p>Employer</p>
