@@ -27,12 +27,12 @@ const links = [
   {
     name: "Stream",
     icon: <FaGamepad size={20} />,
-    link: "/games",
+    link: "/stream",
   },
   {
     name: "Reciever",
     icon: <FaBook size={20} />,
-    link: "/books",
+    link: "/recieve",
   },
   {
     name: "Upcoming Stream",
@@ -42,7 +42,7 @@ const links = [
   {
     name: "Active Bond",
     icon: <AiOutlineCodeSandbox size={20} />,
-    link: "/codes",
+    link: "/activeBond",
     // line: true,
   },
   {

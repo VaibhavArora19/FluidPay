@@ -18,10 +18,10 @@ const Home = () => {
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
-      <main className=" h-[90vh]  bg-[#DFECF1]">
+      <main className=" h-screen  bg-[#DFECF1]">
         <form
           onSubmit={registerHandler}
-          className="flex flex-col font-Poppins w-[750px] bg-[#D0E1E9] shadow-2xl rounded-2xl p-10 mx-auto  mt-20"
+          className="flex flex-col font-Poppins w-[750px] bg-[#D0E1E9] shadow-2xl rounded-2xl p-10 mx-auto  mt-40"
         >
           <label htmlFor="name" className=" font-semibold text-lg mb-1">
             Name
@@ -32,6 +32,9 @@ const Home = () => {
             id="name"
             className="border py-3 px-2 rounded-md bg-gray-200 mb-7"
             placeholder="John Doe"
+            onChange={(e) => {
+              setName(e.target.value);
+            }}
           />
 
           <label htmlFor="add" className=" font-semibold text-lg mb-1">
@@ -43,6 +46,9 @@ const Home = () => {
             className="border py-3 px-2 rounded-md bg-gray-200 mb-7"
             id="add"
             placeholder="0x00000000000000000"
+            onChange={(e) => {
+              setAddress(e.target.value);
+            }}
           />
 
           <div className="flex justify-around gap-4 font-semibold text-lg mb-7">
@@ -58,7 +64,7 @@ const Home = () => {
               htmlFor="employer"
               className="flex gap-1 cursor-pointer items-center hover:bg-gray-300 py-4 bg-gray-200 text-black  pl-2 w-full rounded-md "
             >
-              <input type="radio" name="employ" id="employer" required />
+              <input type="radio"  zname="employ" id="employer" required />
               <p>Employer</p>
             </label>
           </div>
@@ -72,6 +78,9 @@ const Home = () => {
             id="company"
             required
             placeholder="Space DAO"
+            onChange={(e) => {
+              setCompany(e.target.value);
+            }}
           />
 
           <button
