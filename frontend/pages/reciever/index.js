@@ -1,5 +1,7 @@
 import RecieverItem from "@/components/RecieverItem/RecieverItem";
-import React from "react";
+import React, {useEffect} from "react";
+import { useContract, useAccount, useSigner } from "wagmi";
+import { EmployeeStreamABI, EmployeeStreamContract } from "@/constants";
 
 const data = [
   {
@@ -30,6 +32,27 @@ const data = [
 ];
 
 const index = () => {
+  const {data: signer} = useSigner();
+  const {address} = useAccount();
+
+  const contract = useContract({
+    address: EmployeeStreamContract,
+    abi: EmployeeStreamABI,
+    signerOrProvider: signer
+  });
+
+  // useEffect(() => {
+
+  //   if(address){
+
+  //     (async function() {
+
+  //       const employees = await contract.employeesByCompanyName("Google");
+  //     })();
+
+  //   }
+  // }, []);
+
   return (
     <div className="h-screen">
       <div className="mt-20">
