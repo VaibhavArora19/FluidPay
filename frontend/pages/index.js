@@ -18,10 +18,10 @@ const Home = () => {
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
-      <main className=" h-screen  bg-[#DFECF1]">
+      <main className="min-h-[85vh] bg-[#DFECF1]">
         <form
           onSubmit={registerHandler}
-          className="flex flex-col font-Poppins w-[750px] bg-[#D0E1E9] shadow-2xl rounded-2xl p-10 mx-auto  mt-40"
+          className="flex flex-col font-Poppins w-[750px] bg-[#D0E1E9] shadow-2xl rounded-2xl p-10 mx-auto  mt-28"
         >
           <label htmlFor="name" className=" font-semibold text-lg mb-1">
             Name
