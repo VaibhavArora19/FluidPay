@@ -32,12 +32,12 @@ const links = [
   {
     name: "Reciever",
     icon: <FaBook size={20} />,
-    link: "/recieve",
+    link: "/reciever",
   },
   {
-    name: "Upcoming Stream",
+    name: "View Stream",
     icon: <BsMusicNoteBeamed size={20} />,
-    link: "/music",
+    link: "/viewStream",
   },
   {
     name: "Active Bond",
