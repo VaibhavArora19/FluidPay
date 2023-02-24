@@ -1,13 +1,14 @@
 import Head from "next/head";
-import { useRef, useState } from "react";
+import { useRef, useState, useEffect } from "react";
 import { useContract, useAccount, useSigner } from "wagmi";
 import { EmployeeStreamABI, EmployeeStreamContract } from "@/constants";
+import Radio from '@mui/material/Radio';
 
 const Home = () => {
   const [name, setName] = useState("");
   const [address, setAddress] = useState("0x00000000000000000");
-  const [occupation, setOccupation] = useState("");
   const [company, setCompany] = useState("");
+  const [selectedValue, setSelectedValue] = useState("");
   const {data: signer} = useSigner();
   const account = useAccount();
 
@@ -17,13 +18,31 @@ const Home = () => {
     signerOrProvider: signer
   });
 
+  useEffect(() => {
+
+    if(account.address && contract){
+      
+      (async function () {
+        const data = await contract?.employerOfCompany(account.address);
+
+        console.log('data is', data);
+      })();
+    
+    }
+
+  }, [account.address, contract]);
+
+  const handleChange = (event) => {
+    setSelectedValue(event.target.value);
+  };
+
   const registerHandler = async (event) => {
     event.preventDefault();
 
-    if(occupation === "employee"){
+    if(selectedValue === "employee"){
       await contract?.registerEmployee(address, name, company);
     
-    }else if(occupation === "employer"){
+    }else if(selectedValue === "employer"){
       await contract?.registerEmployer(name, company)
     }
   };
@@ -74,7 +93,13 @@ const Home = () => {
               htmlFor="employee"
               className="flex gap-1 items-center cursor-pointer  hover:bg-gray-300 py-4 pl-2 bg-gray-200 text-black  w-full rounded-md "
             >
-              <input type="radio" name="employ" id="employee" required />
+            <Radio
+              checked={selectedValue === 'employee'}
+              onChange={handleChange}
+              value="employee"
+              name="radio-buttons"
+              inputProps={{ 'aria-label': 'employee' }}
+            />
               <p>Employee</p>
             </label>
 
@@ -82,7 +107,13 @@ const Home = () => {
               htmlFor="employer"
               className="flex gap-1 cursor-pointer items-center hover:bg-gray-300 py-4 bg-gray-200 text-black  pl-2 w-full rounded-md "
             >
-              <input type="radio"  zname="employ" id="employer" required />
+              <Radio
+                checked={selectedValue === 'employer'}
+                onChange={handleChange}
+                value="employer"
+                name="radio-buttons"
+                inputProps={{ 'aria-label': 'employer' }}
+              />
               <p>Employer</p>
             </label>
           </div>

@@ -1,14 +1,30 @@
 import Head from "next/head";
-import { useRef, useState } from "react";
+import { useState } from "react";
+import { useAccount} from "wagmi";
+import { createFlow } from "@/superfluid/Flow";
 
 const Stream = () => {
   const [address, setAddress] = useState("");
   const [flowRate, setFlowRate] = useState("");
-  const [token, setToken] = useState("");
   const [selectedType, setSelectedType] = useState("Time");
+  const account = useAccount();
 
-  const registerHandler = (event) => {
+  const registerHandler = async (event) => {
     event.preventDefault();
+
+    let flowRatePerSecond;
+
+    if(selectedType === "/Month"){
+      flowRatePerSecond =  flowRate/2628002; 
+    
+    }else if(selectedType === "/Day") {
+      flowRatePerSecond = flowRate/86400;
+    
+    }else {
+      flowRatePerSecond = flowRate
+    
+    }
+    await createFlow(account.address, address, flowRatePerSecond)
   };
 
   return (
@@ -81,9 +97,9 @@ const Stream = () => {
                   className=" p-3 rounded-lg w-[200px]  focus:outline-none bg-gray-200 text-gray-400 focus:shadow-outline border-2 border-gray-300 mb-5"
                 >
                   <option value="Time">Time</option>
-                  <option value="Yearly">Yearly</option>
-                  <option value="Monthly">Monthly</option>
-                  <option value="Daily">Daily</option>
+                  <option value="Yearly">/Month</option>
+                  <option value="Monthly">/Day</option>
+                  <option value="Daily">/Second</option>
                 </select>
               </div>
             </div>
@@ -96,7 +112,7 @@ const Stream = () => {
               className="border py-3 px-2 rounded-md bg-gray-200 cursor-not-allowed mb-7"
               id="company"
               disabled
-              placeholder="Pata nahi"
+              placeholder="fDAIx"
               onChange={(e) => {
                 setToken(e.target.value);
               }}
