@@ -1,13 +1,31 @@
 import Head from "next/head";
 import { useRef, useState } from "react";
+import { useContract, useAccount, useSigner } from "wagmi";
+import { EmployeeStreamABI, EmployeeStreamContract } from "@/constants";
 
 const Home = () => {
   const [name, setName] = useState("");
   const [address, setAddress] = useState("0x00000000000000000");
+  const [occupation, setOccupation] = useState("");
   const [company, setCompany] = useState("");
+  const {data: signer} = useSigner();
+  const account = useAccount();
 
-  const registerHandler = (event) => {
+  const contract = useContract({
+    address: EmployeeStreamContract,
+    abi: EmployeeStreamABI,
+    signerOrProvider: signer
+  });
+
+  const registerHandler = async (event) => {
     event.preventDefault();
+
+    if(occupation === "employee"){
+      await contract?.registerEmployee(address, name, company);
+    
+    }else if(occupation === "employer"){
+      await contract?.registerEmployer(name, company)
+    }
   };
 
   return (
