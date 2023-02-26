@@ -2,6 +2,9 @@ import Image from "next/image";
 import React, { useEffect } from "react";
 
 const RecieverItem = ({ address, companyName }) => {
+  const recieverHandler = () => {
+    console.log("Reciever Handler");
+  };
   return (
     <div className="flex items-start justify-between w-[750px] p-6 rounded-2xl shadow-md bg-[#D0E1E9]">
       <div className="flex flex-col gap-5">
@@ -15,7 +18,7 @@ const RecieverItem = ({ address, companyName }) => {
       </div>
 
       <button
-        onClick={() => {}}
+        onClick={recieverHandler}
         className="font-semibold py-2 px-7 text-white bg-[#1e1e1e] font-Poppins rounded-xl hover:bg-black/70"
       >
         Stream

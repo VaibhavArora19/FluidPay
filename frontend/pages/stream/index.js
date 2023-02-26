@@ -34,22 +34,8 @@ const Stream = () => {
           <h2 className="text-2xl ml-2 mb-4 font-semibold font-Grotesk">Stream here 👇</h2>
           <form
             onSubmit={registerHandler}
-            className="flex flex-col font-Poppins w-[700px] bg-[#D0E1E9] shadow-2xl rounded-2xl p-10 mx-auto "
+            className="flex flex-col font-Poppins w-[650px] bg-[#D0E1E9] shadow-2xl rounded-2xl p-10 mx-auto "
           >
-            {/* <label htmlFor="name" className=" font-semibold text-lg mb-1">
-           Flow Rate
-          </label>
-          <input
-            required
-            // ref={enteredName}
-            id="name"
-            className="border py-3 px-2 rounded-md bg-gray-200 mb-7"
-            placeholder="John Doe"
-            onChange={(e) => {
-              setName(e.target.value);
-            }}
-          /> */}
-
             <label htmlFor="add" className=" font-semibold text-lg mb-1">
               Address
             </label>
@@ -72,7 +58,7 @@ const Stream = () => {
                 </label>
                 <input
                   required
-                  className="border w-[350px] py-3 px-2 rounded-md bg-gray-200 mb-7"
+                  className="border w-[330px] py-3 px-2 rounded-md bg-gray-200 mb-7"
                   id="flow"
                   placeholder="flow rate"
                   onChange={(e) => {
