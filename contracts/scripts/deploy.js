@@ -2,7 +2,7 @@ const {ethers} = require("hardhat");
 
 async function main() {
 
-  const EmployeeStreamFactory = await ethers.getContractFactory("EmployeeStream");
+  const EmployeeStreamFactory = await ethers.getContractFactory("SalaryBond");
 
   const EmployeeStreamContract = await EmployeeStreamFactory.deploy();
 

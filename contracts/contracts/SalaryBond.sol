@@ -1,7 +1,26 @@
 // SPDX-License-Identifier: MIT
 pragma solidity ^0.8.9;
 
+import { 
+    ISuperfluid 
+} from "@superfluid-finance/ethereum-contracts/contracts/interfaces/superfluid/ISuperfluid.sol";
+
+import { 
+    ISuperToken 
+} from "@superfluid-finance/ethereum-contracts/contracts/interfaces/superfluid/ISuperToken.sol";
+
+import {
+    SuperTokenV1Library
+} from "@superfluid-finance/ethereum-contracts/contracts/apps/SuperTokenV1Library.sol";
+
+import {IERC20} from "@openzeppelin/contracts/token/ERC20/IERC20.sol";
+
 contract SalaryBond {
+
+    using SuperTokenV1Library for ISuperToken;
+    ISuperToken public token = ISuperToken(0x5D8B4C2554aeB7e86F387B4d6c00Ac33499Ed01f);
+    IERC20 public usdcMumbai = IERC20(0x2058A9D7613eEE744279e3856Ef0eAda5FCbaA7e);
+
     // Bond struct
     struct Bond {
         uint id;
@@ -12,6 +31,7 @@ contract SalaryBond {
         uint256 expectedAmount;
         bool paid;
         address buyer;
+        address streamer;
     }
 
     uint public totalBonds;
@@ -33,7 +53,7 @@ contract SalaryBond {
     // @param _expectedAmount - expected amount of bond
     // store the bond in the bonds mapping
     // Need to ADD ACL permission to this function
-    function createBond(uint256 _amount, uint256 _start, uint256 _end, uint256 _expectedAmount) public {
+    function createBond(uint256 _amount, uint256 _start, uint256 _end, uint256 _expectedAmount, address streamer) public {
         require(!bondByUser[msg.sender], "Bond already exists");
 
         totalBonds += 1;
@@ -46,7 +66,8 @@ contract SalaryBond {
             _end,
             _expectedAmount,
             false,
-            address(0)
+            address(0),
+            streamer
         );
         bonds[totalBonds] = bond;
         bondList.push(bond);
@@ -60,9 +81,10 @@ contract SalaryBond {
         require(_id <= totalBonds, "Bond does not exist");
         require(bonds[_id].seller == address(0), "Bond already active");
         require(!bonds[_id].paid, "Bond already paid");
-        require(msg.value == bonds[_id].amount, "Insufficient amount");
         require(bonds[_id].start >= block.timestamp && bonds[_id].end >= block.timestamp, "Bond not active");
 
+        ///@dev approve in the frontend before calling this function
+        usdcMumbai.transferFrom(msg.sender, address(this), bonds[_id].expectedAmount);
         bonds[_id].buyer = msg.sender;        
     }
 
@@ -70,6 +92,7 @@ contract SalaryBond {
     function executeBond(uint _id) public {
          require(!bonds[_id].paid, "Bond already paid");
          require(bonds[_id].buyer != address(0), "No buyer");
+         require(msg.sender == bonds[_id].seller, "You are not the seller");
 
         ///@dev if the stream has not been started after more than 2 hours of expected time send the funds back to buyer
          if(block.timestamp > bonds[_id].start + 2 hours && !bonds[_id].paid) {
@@ -78,10 +101,25 @@ contract SalaryBond {
          }
 
          ///Check the flow here if flow incoming then start the stream from seller account to buyer account and send the funds to seller
-
+         (, int96 flowRate, ,) = token.getFlowInfo(bonds[_id].streamer, bonds[_id].seller);
+         
+         require(flowRate > 0, "No flow exist");
+         token.createFlowFrom(bonds[_id].seller, bonds[_id].buyer, flowRate);   
+         bonds[_id].paid = true;
          (bool sent, ) = bonds[_id].seller.call{value: bonds[_id].amount}("");
-         require(sent, "Transaction failed");
+         require(sent, "Transaction failed");        
         
+    }
+
+    ///@dev buyer can get back funds if the seller didn't started the stream yet
+    function getFundsBack(uint _id) public {
+        require(msg.sender == bonds[_id].buyer, "You are not the buyer");
+        require(bonds[_id].paid == false, "Bond already executed");
+        require(block.timestamp > bonds[_id].start + 2 hours, "Bond not started yet");
+
+        (bool sent, ) = bonds[_id].seller.call{value: bonds[_id].amount}("");
+
+        require(sent, "Transaction failed");
     }
 
     ///@dev Call this function if cheating happened 
