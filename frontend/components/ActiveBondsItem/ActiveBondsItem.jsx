@@ -1,6 +1,13 @@
 import React from "react";
 
 const ActiveBondsItem = ({ address, from, to, amount, registeredAmt }) => {
+  let startDate = new Date(Number(from));
+  let endDate = new Date(Number(to));
+
+  startDate = startDate.toString();
+  endDate = endDate.toString();
+
+
   const acceptBondHandler = () => {
     console.log("Bond Accepted!");
   };
@@ -14,7 +21,7 @@ const ActiveBondsItem = ({ address, from, to, amount, registeredAmt }) => {
           </p>
 
           <p>
-            Reg. Amt:{" "}
+            Req. Amt:{" "}
             <span className="text-yellow-600 font-semibold">
               ${registeredAmt}
             </span>
@@ -23,9 +30,9 @@ const ActiveBondsItem = ({ address, from, to, amount, registeredAmt }) => {
 
         <div className="flex gap-10">
           <p className="text font-Pragati font-semibold text-lg">
-            from - {from}
+            from - {startDate.substr(0, 15)}
           </p>
-          <p className="text font-Pragati font-semibold text-lg">to - {to}</p>
+          <p className="text font-Pragati font-semibold text-lg">to - {endDate.substr(0, 15)}</p>
         </div>
 
         <div className="flex justify-between items-center">

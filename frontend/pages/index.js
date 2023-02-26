@@ -6,11 +6,11 @@ import Radio from "@mui/material/Radio";
 
 const Home = () => {
   const [name, setName] = useState("");
-  const [address, setAddress] = useState("0x00000000000000000");
+  const [address, setAddress] = useState("");
   const [company, setCompany] = useState("");
   const [selectedValue, setSelectedValue] = useState("");
+  const [employerData, setEmployerData] = useState("");
   const { data: signer } = useSigner();
-  console.log("signer is", signer);
   const account = useAccount();
 
   const contract = useContract({
@@ -19,17 +19,23 @@ const Home = () => {
     signerOrProvider: signer,
   });
 
-  console.log("contract is", contract);
 
-  useEffect(() => {
-    if (account.address && signer) {
-      (async function () {
-        const data = await contract?.employerOfCompany(account.address);
+  // useEffect(() => {
+  //   if (account.address && signer) {
+  //     (async function () {
+  //       const data = await contract?.employerOfCompany(account.address);
 
-        console.log("data is", data);
-      })();
-    }
-  }, [account.address, contract]);
+  //       if(data) {
+  //         const employer = await contract?.getEmployerByCompanyName(data);
+
+  //         if(employer) {
+  //           setEmployerData(employer);
+  //         }
+  //       }
+        
+  //     })();
+  //   }
+  // }, [account.address, contract]);
 
   const handleChange = (event) => {
     setSelectedValue(event.target.value);
@@ -67,6 +73,7 @@ const Home = () => {
             id="name"
             className="border py-3 px-2 rounded-md bg-gray-200 mb-7"
             placeholder="John Doe"
+            value={name}
             onChange={(e) => {
               setName(e.target.value);
             }}
@@ -80,6 +87,7 @@ const Home = () => {
             required
             className="border py-3 px-2 rounded-md bg-gray-200 mb-7"
             id="add"
+            value={address}
             placeholder="0x00000000000000000"
             onChange={(e) => {
               setAddress(e.target.value);
@@ -124,6 +132,7 @@ const Home = () => {
             className="border py-3 px-2 rounded-md bg-gray-200 mb-7"
             id="company"
             required
+            value={company}
             placeholder="Space DAO"
             onChange={(e) => {
               setCompany(e.target.value);

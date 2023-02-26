@@ -136,6 +136,11 @@ contract SalaryBond {
         return purchasedBonds[_address];
     }
 
+
+    function getAllBonds() public view returns(Bond[] memory) {
+        return bondList;
+    }
+
     receive() external payable {}
 
     fallback() external payable {}

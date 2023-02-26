@@ -41,17 +41,17 @@ const index = () => {
     signerOrProvider: signer
   });
 
-  // useEffect(() => {
+  useEffect(() => {
 
-  //   if(address){
+    if(address){
 
-  //     (async function() {
+      (async function() {
 
-  //       const employees = await contract.employeesByCompanyName("Google");
-  //     })();
+        const employees = await contract?.employeesByCompanyName("Google");
+      })();
 
-  //   }
-  // }, []);
+    }
+  }, []);
 
   return (
     <div className="h-screen">

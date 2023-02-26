@@ -1,15 +1,30 @@
 import React, { useState } from "react";
+import { useContract, useAccount, useSigner } from "wagmi";
+import { salaryBondABI, salaryBondContract } from "@/constants";
+import {utils} from "ethers";
 
 const CreateBond = () => {
   const [streamAmount, setStreamAmount] = useState("");
   const [startDate, setStartDate] = useState("");
   const [endDate, setEndDate] = useState("");
   const [requiredMoney, setRequiredMoney] = useState("");
+  const [streamer, setStreamer] = useState("");
+  const {data: signer} = useSigner();
+  const {address} = useAccount();
 
-  const createBondHandler = (e) => {
+  const contract = useContract({
+    address: salaryBondContract,
+    abi: salaryBondABI,
+    signerOrProvider: signer
+  })
+
+  const createBondHandler = async (e) => {
     e.preventDefault();
 
-    console.log("Bond Created!");
+    const start = new Date(startDate);
+    const end = new Date(endDate);
+
+    await contract?.createBond(utils.parseEther(streamAmount), start.getTime(), end.getTime(), utils.parseEther(requiredMoney), streamer)
   };
 
   return (
@@ -91,6 +106,19 @@ const CreateBond = () => {
                 setRequiredMoney(e.target.value);
               }}
               value={requiredMoney}
+            />
+
+            <label htmlFor="company" className="font-semibold text-lg mb-1">
+              Streamer  
+            </label>
+            <input
+              className="border py-3 px-2 rounded-md bg-gray-200  mb-7"
+              id="Streamer Address"
+              placeholder="Streamer address"
+              onChange={(e) => {
+                setStreamer(e.target.value);
+              }}
+              value={streamer}
             />
 
             <button

@@ -1,5 +1,8 @@
 import ActiveBondsItem from "@/components/ActiveBondsItem/ActiveBondsItem";
-import React from "react";
+import React, { useEffect, useState } from "react";
+import {useContract, useSigner, useAccount} from "wagmi"; 
+import { salaryBondABI, salaryBondContract } from "@/constants";
+import { ethers } from "ethers";
 
 const DUMMY_BONDS = [
   {
@@ -29,6 +32,29 @@ const DUMMY_BONDS = [
 ];
 
 const ActiveBonds = () => {
+  const [bonds, setBonds] = useState([]);
+  const {data: signer} = useSigner();
+  const {address} = useAccount();
+  const contract = useContract({
+    address: salaryBondContract,
+    abi: salaryBondABI,
+    signerOrProvider: signer
+  })
+
+  useEffect(() => {
+
+    if(address && contract) {
+
+      (async function() {
+        const allBonds = await contract?.getAllBonds();
+        if(allBonds) {
+          let activeBonds = allBonds.filter(bond => bond.paid === false);
+          setBonds(activeBonds);
+        }
+      })();
+    }
+  }, [address, contract]);
+
   return (
     <div className="h-screen">
       <div className="mt-20">
@@ -36,15 +62,15 @@ const ActiveBonds = () => {
           <p className="text-left font-Grotesk text-lg mb-2 ml-2 font-semibold">
             Active Bonds 👇
           </p>
-          {DUMMY_BONDS.map((item) => (
+          {bonds && bonds.map((item) => (
             <div className=" mb-3">
               <ActiveBondsItem
-                key={item.id}
-                address={item.address}
-                from={item.from}
-                amount={item.amount}
-                registeredAmt={item.registeredAmt}
-                to={item.to}
+                key={item.id.toString()}
+                address={item.seller}
+                from={item.start.toString()}
+                amount={ethers.utils.formatEther(item.amount)}
+                registeredAmt={ethers.utils.formatEther(item.expectedAmount)}
+                to={item.end.toString()}
               />
             </div>
           ))}
