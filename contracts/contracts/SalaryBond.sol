@@ -23,7 +23,7 @@ contract SalaryBond {
 
     // Bond struct
     struct Bond {
-        uint id;
+        uint256 id;
         address seller;
         uint256 amount;
         uint256 start;
@@ -34,7 +34,7 @@ contract SalaryBond {
         address streamer;
     }
 
-    uint public totalBonds;
+    uint256 public totalBonds;
 
     mapping(uint256 => Bond) public bonds;
 
@@ -77,7 +77,7 @@ contract SalaryBond {
     // @param _employee - employee address
     // transfer the bond amount to the employee
     // Need to transfer ACL permissions to the buyer
-    function buyBond(uint _id) public payable {
+    function buyBond(uint256 _id) public payable {
         require(_id <= totalBonds, "Bond does not exist");
         require(bonds[_id].seller == address(0), "Bond already active");
         require(!bonds[_id].paid, "Bond already paid");
@@ -95,10 +95,12 @@ contract SalaryBond {
          require(msg.sender == bonds[_id].seller, "You are not the seller");
 
         ///@dev if the stream has not been started after more than 2 hours of expected time send the funds back to buyer
-         if(block.timestamp > bonds[_id].start + 2 hours && !bonds[_id].paid) {
-            (bool isSent, ) = bonds[_id].buyer.call{value: bonds[_id].amount}("");
+        if (block.timestamp > bonds[_id].start + 2 hours && !bonds[_id].paid) {
+            (bool isSent, ) = bonds[_id].buyer.call{value: bonds[_id].amount}(
+                ""
+            );
             require(isSent, "Transaction failed");
-         }
+        }
 
          ///Check the flow here if flow incoming then start the stream from seller account to buyer account and send the funds to seller
          (, int96 flowRate, ,) = token.getFlowInfo(bonds[_id].streamer, bonds[_id].seller);
@@ -124,10 +126,17 @@ contract SalaryBond {
 
     ///@dev Call this function if cheating happened 
     ///i.e. if a seller stopped the stream after getting his funds   
-    function slash() public {
+    function slash() public {}
 
+    function getPurchasedBonds(address _address)
+        public
+        view
+        returns (Bond[] memory)
+    {
+        return purchasedBonds[_address];
     }
 
-    receive() external payable{}
-    fallback() external payable{}
+    receive() external payable {}
+
+    fallback() external payable {}
 }

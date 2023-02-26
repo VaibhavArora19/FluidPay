@@ -42,7 +42,7 @@ const links = [
   {
     name: "Active Bond",
     icon: <AiOutlineCodeSandbox size={20} />,
-    link: "/activeBond",
+    link: "/activeBonds",
     // line: true,
   },
   {

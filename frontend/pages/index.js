@@ -2,34 +2,33 @@ import Head from "next/head";
 import { useRef, useState, useEffect } from "react";
 import { useContract, useAccount, useSigner } from "wagmi";
 import { EmployeeStreamABI, EmployeeStreamContract } from "@/constants";
-import Radio from '@mui/material/Radio';
+import Radio from "@mui/material/Radio";
 
 const Home = () => {
   const [name, setName] = useState("");
   const [address, setAddress] = useState("0x00000000000000000");
   const [company, setCompany] = useState("");
   const [selectedValue, setSelectedValue] = useState("");
-  const {data: signer} = useSigner();
+  const { data: signer } = useSigner();
+  console.log("signer is", signer);
   const account = useAccount();
 
   const contract = useContract({
     address: EmployeeStreamContract,
     abi: EmployeeStreamABI,
-    signerOrProvider: signer
+    signerOrProvider: signer,
   });
 
-  useEffect(() => {
+  console.log("contract is", contract);
 
-    if(account.address && contract){
-      
+  useEffect(() => {
+    if (account.address && signer) {
       (async function () {
         const data = await contract?.employerOfCompany(account.address);
 
-        console.log('data is', data);
+        console.log("data is", data);
       })();
-    
     }
-
   }, [account.address, contract]);
 
   const handleChange = (event) => {
@@ -39,11 +38,10 @@ const Home = () => {
   const registerHandler = async (event) => {
     event.preventDefault();
 
-    if(selectedValue === "employee"){
+    if (selectedValue === "employee") {
       await contract?.registerEmployee(address, name, company);
-    
-    }else if(selectedValue === "employer"){
-      await contract?.registerEmployer(name, company)
+    } else if (selectedValue === "employer") {
+      await contract?.registerEmployer(name, company);
     }
   };
 
@@ -93,13 +91,13 @@ const Home = () => {
               htmlFor="employee"
               className="flex gap-1 items-center cursor-pointer  hover:bg-gray-300 py-4 pl-2 bg-gray-200 text-black  w-full rounded-md "
             >
-            <Radio
-              checked={selectedValue === 'employee'}
-              onChange={handleChange}
-              value="employee"
-              name="radio-buttons"
-              inputProps={{ 'aria-label': 'employee' }}
-            />
+              <Radio
+                checked={selectedValue === "employee"}
+                onChange={handleChange}
+                value="employee"
+                name="radio-buttons"
+                inputProps={{ "aria-label": "employee" }}
+              />
               <p>Employee</p>
             </label>
 
@@ -108,11 +106,11 @@ const Home = () => {
               className="flex gap-1 cursor-pointer items-center hover:bg-gray-300 py-4 bg-gray-200 text-black  pl-2 w-full rounded-md "
             >
               <Radio
-                checked={selectedValue === 'employer'}
+                checked={selectedValue === "employer"}
                 onChange={handleChange}
                 value="employer"
                 name="radio-buttons"
-                inputProps={{ 'aria-label': 'employer' }}
+                inputProps={{ "aria-label": "employer" }}
               />
               <p>Employer</p>
             </label>
