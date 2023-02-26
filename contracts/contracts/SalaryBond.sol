@@ -98,8 +98,12 @@ contract SalaryBond {
     ///i.e. if a seller stopped the stream after getting his funds
     function slash() public {}
 
-    function getPurchasedBonds() public view returns (Bond[] memory) {
-        return purchasedBonds[msg.sender];
+    function getPurchasedBonds(address _address)
+        public
+        view
+        returns (Bond[] memory)
+    {
+        return purchasedBonds[_address];
     }
 
     receive() external payable {}
