@@ -1,16 +1,16 @@
-const {ethers} = require("hardhat");
+const { ethers } = require("hardhat");
 
 async function main() {
-
-  const EmployeeStreamFactory = await ethers.getContractFactory("SalaryBond");
+  const EmployeeStreamFactory = await ethers.getContractFactory(
+    "EmployeeStream"
+  );
 
   const EmployeeStreamContract = await EmployeeStreamFactory.deploy();
 
   await EmployeeStreamContract.deployed();
 
   console.log("Contract is deployed on: ", EmployeeStreamContract.address);
-
-};
+}
 
 main();
 

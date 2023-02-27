@@ -5,7 +5,7 @@ export const superToken = "fDAIx"; //This needs to be 'xDAIx' in case of gnosis
 export const salaryBondContract = "0xC815387c20912A811947A833ebefB0A8E57d15Fc";
 
 export const EmployeeStreamContract =
-  "0x62211ED44F43f18fE1428665e1fFA5d98F83Dc5F";
+  "0x7763532258Fb6f0355770FF4374913b751186407";
 
 export const EmployeeStreamABI = [
   {
