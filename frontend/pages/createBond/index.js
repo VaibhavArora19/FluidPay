@@ -33,14 +33,14 @@ const CreateBond = () => {
 
   return (
     <>
-      <main className=" h-screen  bg-[#DFECF1] py-28">
+      <main className=" min-h-screen  bg-[#DFECF1] py-28">
         <div className="w-fit mx-auto">
           <h2 className="text-2xl ml-2 mb-4 font-semibold font-Grotesk">
             Create Bond 👇
           </h2>
           <form
             onSubmit={createBondHandler}
-            className="flex flex-col font-Poppins w-[600px] bg-[#D0E1E9] shadow-2xl rounded-2xl p-10 mx-auto "
+            className="flex flex-col font-Poppins w-[650px] bg-[#D0E1E9] shadow-2xl rounded-2xl p-10 mx-auto "
           >
             <label
               htmlFor="stream_amount"

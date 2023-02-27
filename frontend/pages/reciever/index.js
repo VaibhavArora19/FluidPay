@@ -56,7 +56,7 @@ const index = () => {
   }, [address, contract]);
 
   return (
-    <div className="h-screen">
+    <div className="min-h-screen">
       <div className="mt-20">
         <div className="w-fit mx-auto">
           <p className="text-left font-Grotesk text-lg mb-2 ml-2 font-semibold">List of all the recievers 👇</p>
