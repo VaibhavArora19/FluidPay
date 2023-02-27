@@ -22,10 +22,7 @@ const ActiveBondsItem = ({id, address, from, to, amount, registeredAmt }) => {
 
   const acceptBondHandler = async () => {
 
-    console.log('onclick');
-    console.log(id);
-    console.log(contract)
-    // await getApproval(ethers.utils.parseEther(registeredAmt));
+    await getApproval(ethers.utils.parseEther(registeredAmt));
     await contract?.buyBond(id);
 
   };

@@ -1,5 +1,5 @@
 import RecieverItem from "@/components/RecieverItem/RecieverItem";
-import React, {useEffect} from "react";
+import React, {useEffect, useState} from "react";
 import { useContract, useAccount, useSigner } from "wagmi";
 import { EmployeeStreamABI, EmployeeStreamContract } from "@/constants";
 
@@ -34,7 +34,7 @@ const data = [
 const index = () => {
   const {data: signer} = useSigner();
   const {address} = useAccount();
-
+  const [employees, setEmployees] = useState([]);
   const contract = useContract({
     address: EmployeeStreamContract,
     abi: EmployeeStreamABI,
@@ -43,16 +43,23 @@ const index = () => {
 
   useEffect(() => {
 
-    console.log(contract);
-    // if(address && contract){
+    if(address && contract){
 
-    //   (async function() {
+      (async function() {
 
-    //     const employees = await contract?.getEmployerByCompanyName("Livepeer");
-    //     console.log(employees);
-    //   })();
+        const getCompany = await contract?.employerOfCompany(address);
 
-    // }
+        if(getCompany){
+          const totalEmployees = await contract?.getEmployeesByCompanyName(getCompany);
+          console.log('tt', totalEmployees);
+          setEmployees(totalEmployees)
+        }
+        
+
+      
+      })();
+
+    }
   }, [address, contract]);
 
   return (
@@ -60,11 +67,11 @@ const index = () => {
       <div className="mt-20">
         <div className="w-fit mx-auto">
           <p className="text-left font-Grotesk text-lg mb-2 ml-2 font-semibold">List of all the recievers 👇</p>
-          {data.map((item) => (
+          {employees.length > 0 && employees.map((item) => (
             <div className=" mb-3">
               <RecieverItem
-                key={item.id}
-                address={item.address}
+                key={item.userAddress}
+                address={item.userAddress}
                 companyName={item.companyName}
               />
             </div>

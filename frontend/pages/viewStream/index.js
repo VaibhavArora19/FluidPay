@@ -14,14 +14,15 @@ const DUMMY_STREAMS = [
 ];
 
 const index = () => {
-  const [streams, setStreams] = useState();
+  const [streams, setStreams] = useState([]);
   const { address } = useAccount();
 
   useEffect(() => {
     if (address) {
       (async function () {
-        const result = await getStreams(address);
-        setStreams(result);
+        const result = await getStreams(address.toLowerCase());
+        console.log(result);
+        setStreams(result.data.streams);
       })();
     }
   }, [address]);
@@ -42,13 +43,13 @@ const index = () => {
           </div>
 
           <div>
-            {DUMMY_STREAMS.map((stream) => (
+            {streams && streams.map((stream) => (
               <ViewStreamItem
-                sender_address={stream.sender_address}
-                allTimeFlow={stream.allTimeFlow}
-                startedAt={stream.StartedAt}
-                flowRate={stream.flowRate}
-                key={stream.id}
+                key={stream.createdAtTimestamp + Math.random()}
+                sender_address={stream.sender.id}
+                allTimeFlow={stream.streamedUntilUpdatedAt}
+                startedAt={stream.createdAtTimestamp}
+                flowRate={stream.currentFlowRate}
               />
             ))}
           </div>

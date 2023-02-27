@@ -1,5 +1,7 @@
 import MyBondItem from "@/components/MyBondItem/MyBondItem";
-import React from "react";
+import React, {use, useEffect, useState} from "react";
+import { salaryBondABI, salaryBondContract } from "@/constants";
+import { useAccount, useSigner, useContract } from "wagmi";
 
 const DUMMY_BONDS = [
   {
@@ -15,6 +17,32 @@ const DUMMY_BONDS = [
 ];
 
 const MyBonds = () => {
+  const [myBonds, setMyBonds] = useState([]);
+  const {address} = useAccount();
+  const {data: signer} = useSigner();
+  const contract = useContract({
+    address: salaryBondContract,
+    abi: salaryBondABI,
+    signerOrProvider: signer
+  })
+
+  useEffect(() => {
+
+    if(address && contract) {
+      (async function() {
+        const bonds = await contract?.getAllBonds();
+        const filteredBonds = bonds.filter(bond => {
+          return bond.buyer.toLowerCase() === address.toLowerCase() || bond.seller.toLowerCase() === address.toLowerCase()
+        });
+
+        console.log('f', filteredBonds)
+        setMyBonds(filteredBonds);
+
+      })();
+    }
+
+  }, [address, contract]);
+
   return (
     <div className="min-h-screen">
       <div className="mt-28">
@@ -22,17 +50,18 @@ const MyBonds = () => {
           <p className="text-left font-Grotesk text-xl mb-2 ml-2 font-semibold">
             My Bonds 👇
           </p>
-          {DUMMY_BONDS.map((bond) => (
+          {myBonds.length > 0 && myBonds.map((bond) => (
             <div className=" mb-3">
               <MyBondItem
                 key={bond.id}
-                amount={bond.amount}
-                registeredAmt={bond.registered_amt}
-                buyer_address={bond.buyer_address}
-                streamer_address={bond.streamer_address}
-                seller_address={bond.seller_address}
-                toTime={bond.to}
-                fromTime={bond.from}
+                amount={bond.amount.toString()}
+                registeredAmt={bond.expectedAmount.toString()}
+                buyer_address={bond.buyer}
+                streamer_address={bond.streamer}
+                seller_address={bond.seller}
+                toTime={bond.end.toString()}
+                fromTime={bond.start.toString()}
+                isPaid={bond.paid}
               />
             </div>
           ))}
