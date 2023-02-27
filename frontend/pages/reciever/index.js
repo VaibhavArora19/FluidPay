@@ -43,15 +43,17 @@ const index = () => {
 
   useEffect(() => {
 
-    if(address){
+    console.log(contract);
+    // if(address && contract){
 
-      (async function() {
+    //   (async function() {
 
-        const employees = await contract?.employeesByCompanyName("Google");
-      })();
+    //     const employees = await contract?.getEmployerByCompanyName("Livepeer");
+    //     console.log(employees);
+    //   })();
 
-    }
-  }, []);
+    // }
+  }, [address, contract]);
 
   return (
     <div className="h-screen">
