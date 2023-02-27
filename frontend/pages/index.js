@@ -19,23 +19,23 @@ const Home = () => {
     signerOrProvider: signer,
   });
 
+  useEffect(() => {
+    if (account.address && signer) {
+      (async function () {
+        const data = await contract?.employerOfCompany(account.address);
+        console.log(data);
 
-  // useEffect(() => {
-  //   if (account.address && signer) {
-  //     (async function () {
-  //       const data = await contract?.employerOfCompany(account.address);
+        if (data) {
+          const employer = await contract?.getEmployerByCompanyName(data);
+          console.log(employer);
 
-  //       if(data) {
-  //         const employer = await contract?.getEmployerByCompanyName(data);
-
-  //         if(employer) {
-  //           setEmployerData(employer);
-  //         }
-  //       }
-        
-  //     })();
-  //   }
-  // }, [account.address, contract]);
+          if (employer) {
+            setEmployerData(employer);
+          }
+        }
+      })();
+    }
+  }, [account.address, contract]);
 
   const handleChange = (event) => {
     setSelectedValue(event.target.value);
