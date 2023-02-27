@@ -51,9 +51,9 @@ const links = [
     link: "/createBond",
   },
   {
-    name: "Settings",
+    name: "My Bonds",
     icon: <IoMdSettings size={20} />,
-    link: "/settings",
+    link: "/myBonds",
   },
 ];
 
