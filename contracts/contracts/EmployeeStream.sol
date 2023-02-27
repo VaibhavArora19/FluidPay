@@ -84,6 +84,14 @@ contract EmployeeStream {
         return employerByCompanyName[_companyName];
     }
 
+    function getEmployeesByCompanyName(string memory _companyName)
+        public
+        view
+        returns (Employee[] memory)
+    {
+        return employeesByCompanyName[_companyName];
+    }
+
     // compare two strings
     // @param str1 - first string
     // @param str2 - second string
