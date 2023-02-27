@@ -1,6 +1,18 @@
 import React from "react";
+import {getApproval} from "../../ERC20/erc20";
+import {ethers} from "ethers";
+import { useContract, useAccount, useSigner} from "wagmi";
+import { salaryBondABI, salaryBondContract } from "@/constants";
 
-const ActiveBondsItem = ({ address, from, to, amount, registeredAmt }) => {
+const ActiveBondsItem = ({id, address, from, to, amount, registeredAmt }) => {
+  const {data: signer} = useSigner();
+  const account = useAccount();
+  const contract = useContract({
+    address: salaryBondContract,
+    abi: salaryBondABI,
+    signerOrProvider: signer
+  });
+  
   let startDate = new Date(Number(from));
   let endDate = new Date(Number(to));
 
@@ -8,8 +20,14 @@ const ActiveBondsItem = ({ address, from, to, amount, registeredAmt }) => {
   endDate = endDate.toString();
 
 
-  const acceptBondHandler = () => {
-    console.log("Bond Accepted!");
+  const acceptBondHandler = async () => {
+
+    console.log('onclick');
+    console.log(id);
+    console.log(contract)
+    // await getApproval(ethers.utils.parseEther(registeredAmt));
+    await contract?.buyBond(id);
+
   };
 
   return (
@@ -30,9 +48,9 @@ const ActiveBondsItem = ({ address, from, to, amount, registeredAmt }) => {
 
         <div className="flex gap-10">
           <p className="text font-Pragati font-semibold text-lg">
-            from - {startDate.substr(0, 15)}
+            from - {startDate}
           </p>
-          <p className="text font-Pragati font-semibold text-lg">to - {endDate.substr(0, 15)}</p>
+          <p className="text font-Pragati font-semibold text-lg">to - {endDate}</p>
         </div>
 
         <div className="flex justify-between items-center">

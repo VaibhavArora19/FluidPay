@@ -2,7 +2,7 @@ export const chainId = 80001; //This needs to change while deploying on gnosis m
 export const xDaix = '0x5D8B4C2554aeB7e86F387B4d6c00Ac33499Ed01f'; //This needs to change in case of gnosis as well current address is of polygon mumbai
 export const superToken = 'fDAIx'; //This needs to be 'xDAIx' in case of gnosis
 
-export const salaryBondContract = '0xB574c0Ac1fe9ec612f0Be7D21e29070c784F098F';
+export const salaryBondContract = '0xC815387c20912A811947A833ebefB0A8E57d15Fc';
 
 export const EmployeeStreamContract = '0x1dF34c955a04c6e8E8a80cdA2a4E5C121Fdf4ed2';
 

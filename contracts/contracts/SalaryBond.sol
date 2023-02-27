@@ -79,7 +79,7 @@ contract SalaryBond {
     // Need to transfer ACL permissions to the buyer
     function buyBond(uint256 _id) public payable {
         require(_id <= totalBonds, "Bond does not exist");
-        require(bonds[_id].seller == address(0), "Bond already active");
+        require(bonds[_id].buyer == address(0), "Bond already active");
         require(!bonds[_id].paid, "Bond already paid");
         require(bonds[_id].start >= block.timestamp && bonds[_id].end >= block.timestamp, "Bond not active");
 

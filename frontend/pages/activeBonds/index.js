@@ -4,32 +4,6 @@ import {useContract, useSigner, useAccount} from "wagmi";
 import { salaryBondABI, salaryBondContract } from "@/constants";
 import { ethers } from "ethers";
 
-const DUMMY_BONDS = [
-  {
-    id: "a1",
-    amount: 2022.43,
-    from: "22/12/2022",
-    to: "23/03/2024",
-    registeredAmt: 900,
-    address: "0x123456789012899q4q4525625",
-  },
-  {
-    id: "a2",
-    amount: 2022.43,
-    from: "22/12/2022",
-    to: "23/03/2024",
-    registeredAmt: 900,
-    address: "0x123456789012899q252425624",
-  },
-  {
-    id: "a3",
-    amount: 2022.43,
-    from: "22/12/2022",
-    to: "23/03/2024",
-    registeredAmt: 900,
-    address: "0x12345678901289934255242",
-  },
-];
 
 const ActiveBonds = () => {
   const [bonds, setBonds] = useState([]);
@@ -66,6 +40,7 @@ const ActiveBonds = () => {
             <div className=" mb-3">
               <ActiveBondsItem
                 key={item.id.toString()}
+                id={item.id.toString()}
                 address={item.seller}
                 from={item.start.toString()}
                 amount={ethers.utils.formatEther(item.amount)}
