@@ -2,7 +2,7 @@ import Link from "next/link";
 import React, { useContext, useState } from "react";
 import { HiMenuAlt3 } from "react-icons/hi";
 import { MdDashboard } from "react-icons/md";
-import { FaBook, FaGamepad } from "react-icons/fa";
+import { FaBook, FaGamepad, FaHome } from "react-icons/fa";
 import {
   BsMusicNoteBeamed,
   BsPeopleFill,
@@ -22,7 +22,7 @@ const links = [
   {
     name: "Register",
     icon: <MdDashboard size={20} />,
-    link: "/",
+    link: "/register",
   },
   {
     name: "Stream",
@@ -54,6 +54,11 @@ const links = [
     name: "My Bonds",
     icon: <IoMdSettings size={20} />,
     link: "/myBonds",
+  },
+  {
+    name: "Home",
+    icon: <FaHome size={20} />,
+    link: "/",
   },
 ];
 
