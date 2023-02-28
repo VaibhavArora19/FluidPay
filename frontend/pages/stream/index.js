@@ -28,7 +28,7 @@ const Stream = () => {
       flowRatePerSecond = flowRate
     
     }
-    await createFlow(account.address, address, flowRatePerSecond)
+    await createFlow(account.address, userAddress ? userAddress : address, flowRatePerSecond)
   };
 
   return (
