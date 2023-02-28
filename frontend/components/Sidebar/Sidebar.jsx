@@ -2,7 +2,7 @@ import Link from "next/link";
 import React, { useContext, useState } from "react";
 import { HiMenuAlt3 } from "react-icons/hi";
 import { MdDashboard } from "react-icons/md";
-import { FaBook, FaGamepad } from "react-icons/fa";
+import { FaBook, FaGamepad, FaHome } from "react-icons/fa";
 import {
   BsMusicNoteBeamed,
   BsPeopleFill,
@@ -14,7 +14,7 @@ import { IoMdSettings } from "react-icons/io";
 import { IoExitOutline } from "react-icons/io5";
 import { FaRegIdCard } from "react-icons/fa";
 import { FaStream } from "react-icons/fa";
-import { MdViewSidebar, MdOutbond } from "react-icons/md"
+import { MdViewSidebar, MdOutbond } from "react-icons/md";
 // import { accountShortner } from "@/utils/accountShortner";
 
 import Image from "next/image";
@@ -25,7 +25,7 @@ const links = [
   {
     name: "Register",
     icon: <FaRegIdCard size={20} />,
-    link: "/",
+    link: "/register",
   },
   {
     name: "Stream",
@@ -57,6 +57,11 @@ const links = [
     name: "My Bonds",
     icon: <MdOutbond size={20} />,
     link: "/myBonds",
+  },
+  {
+    name: "Home",
+    icon: <FaHome size={20} />,
+    link: "/",
   },
 ];
 

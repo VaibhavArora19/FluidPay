@@ -1,5 +1,5 @@
 import RecieverItem from "@/components/RecieverItem/RecieverItem";
-import React, {useEffect, useState} from "react";
+import React, { useEffect, useState } from "react";
 import { useContract, useAccount, useSigner } from "wagmi";
 import { EmployeeStreamABI, EmployeeStreamContract } from "@/constants";
 
@@ -32,32 +32,27 @@ const data = [
 ];
 
 const index = () => {
-  const {data: signer} = useSigner();
-  const {address} = useAccount();
+  const { data: signer } = useSigner();
+  const { address } = useAccount();
   const [employees, setEmployees] = useState([]);
   const contract = useContract({
     address: EmployeeStreamContract,
     abi: EmployeeStreamABI,
-    signerOrProvider: signer
+    signerOrProvider: signer,
   });
 
   useEffect(() => {
-
-    if(address && contract){
-
-      (async function() {
-
+    if (address && signer) {
+      (async function () {
         const getCompany = await contract?.employerOfCompany(address);
 
-        if(getCompany){
-          const totalEmployees = await contract?.getEmployeesByCompanyName(getCompany);
-          setEmployees(totalEmployees)
+        if (getCompany) {
+          const totalEmployees = await contract?.getEmployeesByCompanyName(
+            getCompany
+          );
+          setEmployees(totalEmployees);
         }
-        
-
-      
       })();
-
     }
   }, [address, contract]);
 
@@ -65,16 +60,20 @@ const index = () => {
     <div className="min-h-screen">
       <div className="mt-20">
         <div className="w-fit mx-auto">
-          <p className="text-left font-Grotesk text-lg mb-2 ml-2 font-semibold">List of all the recievers 👇</p>
-          {employees.length > 0 && employees.map((item) => (
-            <div className=" mb-3">
-              <RecieverItem
-                key={item.userAddress}
-                address={item.userAddress}
-                companyName={item.companyName}
-              />
-            </div>
-          ))}
+          <p className="text-left font-Grotesk text-lg mb-2 ml-2 font-semibold">
+            List of all the Employees 👇
+          </p>
+          {employees.length > 0 &&
+            employees.map((item) => (
+              <div className=" mb-3">
+                <RecieverItem
+                  key={item.userAddress}
+                  address={item.userAddress}
+                  companyName={item.companyName}
+                  name={item.name}
+                />
+              </div>
+            ))}
         </div>
       </div>
     </div>
