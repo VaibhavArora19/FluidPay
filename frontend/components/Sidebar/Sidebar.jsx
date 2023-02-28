@@ -12,6 +12,9 @@ import { AiOutlineCodeSandbox, AiFillTrophy } from "react-icons/ai";
 import { FiDownloadCloud } from "react-icons/fi";
 import { IoMdSettings } from "react-icons/io";
 import { IoExitOutline } from "react-icons/io5";
+import { FaRegIdCard } from "react-icons/fa";
+import { FaStream } from "react-icons/fa";
+import { MdViewSidebar, MdOutbond } from "react-icons/md"
 // import { accountShortner } from "@/utils/accountShortner";
 
 import Image from "next/image";
@@ -21,12 +24,12 @@ import { useRouter } from "next/router";
 const links = [
   {
     name: "Register",
-    icon: <MdDashboard size={20} />,
+    icon: <FaRegIdCard size={20} />,
     link: "/",
   },
   {
     name: "Stream",
-    icon: <FaGamepad size={20} />,
+    icon: <FaStream size={20} />,
     link: "/stream",
   },
   {
@@ -36,7 +39,7 @@ const links = [
   },
   {
     name: "View Stream",
-    icon: <BsMusicNoteBeamed size={20} />,
+    icon: <MdViewSidebar size={20} />,
     link: "/viewStream",
   },
   {
@@ -52,7 +55,7 @@ const links = [
   },
   {
     name: "My Bonds",
-    icon: <IoMdSettings size={20} />,
+    icon: <MdOutbond size={20} />,
     link: "/myBonds",
   },
 ];
