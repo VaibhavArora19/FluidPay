@@ -2,12 +2,16 @@ import Head from "next/head";
 import { useState } from "react";
 import { useAccount} from "wagmi";
 import { createFlow } from "@/superfluid/Flow";
+import {useRouter} from "next/router";
 
 const Stream = () => {
   const [address, setAddress] = useState("");
   const [flowRate, setFlowRate] = useState("");
   const [selectedType, setSelectedType] = useState("Time");
   const account = useAccount();
+  const router = useRouter();
+
+  const {userAddress} = router.query
 
   const registerHandler = async (event) => {
     event.preventDefault();
@@ -48,7 +52,7 @@ const Stream = () => {
               onChange={(e) => {
                 setAddress(e.target.value);
               }}
-              value={address}
+              value={userAddress ? userAddress: address}
             />
 
             <div className="flex gap-10">

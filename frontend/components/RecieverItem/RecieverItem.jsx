@@ -1,9 +1,12 @@
 import Image from "next/image";
 import React, { useEffect } from "react";
+import { useRouter } from "next/router";
 
 const RecieverItem = ({ address, companyName }) => {
+  const router = useRouter();
+  
   const recieverHandler = () => {
-    console.log("Reciever Handler");
+      router.push(`/stream?userAddress=${address}`)
   };
   return (
     <div className="flex items-start justify-between w-[750px] p-6 rounded-2xl shadow-md bg-[#D0E1E9]">
