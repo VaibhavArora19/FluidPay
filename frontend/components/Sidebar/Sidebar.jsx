@@ -14,7 +14,7 @@ import { IoMdSettings } from "react-icons/io";
 import { IoExitOutline } from "react-icons/io5";
 import { FaRegIdCard } from "react-icons/fa";
 import { FaStream } from "react-icons/fa";
-import { MdViewSidebar, MdOutbond } from "react-icons/md"
+import { MdViewSidebar, MdOutbond } from "react-icons/md";
 // import { accountShortner } from "@/utils/accountShortner";
 
 import Image from "next/image";
@@ -25,7 +25,7 @@ const links = [
   {
     name: "Register",
     icon: <FaRegIdCard size={20} />,
-    link: "/",
+    link: "/register",
   },
   {
     name: "Stream",
