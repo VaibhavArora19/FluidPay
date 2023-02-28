@@ -51,7 +51,6 @@ const index = () => {
 
         if(getCompany){
           const totalEmployees = await contract?.getEmployeesByCompanyName(getCompany);
-          console.log('tt', totalEmployees);
           setEmployees(totalEmployees)
         }
         
