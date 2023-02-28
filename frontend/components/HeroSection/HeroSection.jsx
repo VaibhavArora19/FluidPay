@@ -8,17 +8,16 @@ const HeroSection = () => {
     <header className="bg-[#] h-screen bg-[url('/bg.png')] bg-center">
       <section className="w-[85%] mx-auto h-[95%] flex flex-col justify-between">
         <div className="w-[80%] mx-auto py-32 text-center mt-16">
-          <h2 className="text-black font-Grotesk text-5xl mb-6 font-semibold tracking-wide leading-[50px]">
+          <h2 className="text-black font-Grotesk text-5xl mb-8 font-semibold tracking-wide leading-[50px]">
             <span className=" text-black ">
-              The most intuitive way to buy and sell
+              The most intuitive way to Manage Employee's Streams
             </span>{" "}
-            crypto in BitTorrent Chain
+            & Bonds on Chain
           </h2>
 
           <p className="text-gray-600 w-[60%] mx-auto font-Poppins ">
-            A Person to person decentralised crypto marketplace where user can
-            sell and buy BitTorrent chain cryptocurrencies using any payment
-            method.
+            A decentralized application to create & manage employee/employers
+            streams and bonds with the most secured and user-friendly way possible.
           </p>
 
           <button
