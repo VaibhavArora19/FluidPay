@@ -1,5 +1,6 @@
 import { ethers } from "ethers";
-import { useAccount } from "wagmi";
+import { useSigner, useContract, useAccount } from "wagmi";
+import { salaryBondABI, salaryBondContract } from "@/constants";
 
 const MyBondItem = ({
   amount,
@@ -7,19 +8,29 @@ const MyBondItem = ({
   seller_address,
   buyer_address,
   streamer_address,
-  fromTime,
+  fromTime, 
   toTime,
-  isPaid
+  isPaid,
+  id
 }) => {
   const {address} = useAccount();
+  const {data: signer} = useSigner();
+  const contract = useContract({
+    address: salaryBondContract,
+    abi: salaryBondABI,
+    signerOrProvider: signer
+  })
   let start = new Date(Number(fromTime));
   let end = new Date(Number(toTime));
 
   start = start.toString();
   end = end.toString();
-  const executeBondHandler = () => {
-    console.log("Bonds executed!");
+
+  const executeBondHandler = async () => {
+    
+    await contract?.executeBond(id);
   };
+
   return (
     <div className="flex items-start justify-between w-[750px] p-6 rounded-2xl shadow-md bg-[#D0E1E9]">
       <div className="flex flex-col gap-4 w-full">

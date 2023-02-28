@@ -53,7 +53,7 @@ const MyBonds = () => {
           {myBonds.length > 0 && myBonds.map((bond) => (
             <div className=" mb-3">
               <MyBondItem
-                key={bond.id}
+                key={bond.id.toString()}
                 amount={bond.amount.toString()}
                 registeredAmt={bond.expectedAmount.toString()}
                 buyer_address={bond.buyer}
@@ -62,6 +62,7 @@ const MyBonds = () => {
                 toTime={bond.end.toString()}
                 fromTime={bond.start.toString()}
                 isPaid={bond.paid}
+                id={bond.id.toString()}
               />
             </div>
           ))}
